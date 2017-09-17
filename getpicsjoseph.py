@@ -22,9 +22,13 @@ if __name__ == '__main__':
     #session = requests.session()
     page=requests.get(url, headers=hdr)
     soup = BeautifulSoup(page.text, 'html.parser')
-    print(soup)
+    #print(soup)
     for o in soup.findAll("img", {'class': 'lazyload'}):
         #print(o)
-        id=o[-24:-3]
+        id=str(o)[-24:-3]
         data='https://s3-eu-west-1.amazonaws.com/sj-event-prod/1289/'+id
-        os.system('wget '+data)
+        f = open(id,'wb')
+        f.write(requests.get(data).content)
+        f.close()
+        #print(data)
+        #os.system('wget '+data)
